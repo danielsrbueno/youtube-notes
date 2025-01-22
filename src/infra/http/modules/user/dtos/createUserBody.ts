@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-export class CreateUserBody {
-  name: string
-  email: string
-  password: string
-=======
 import { IsEmail, IsNotEmpty, IsString } from "class-validator"
 
 export class CreateUserBody {
@@ -20,6 +14,5 @@ export class CreateUserBody {
   @IsNotEmpty()
   password: string
 
->>>>>>> feature/user-registration
   createdAt: Date
 }
