@@ -3,7 +3,8 @@ import { User as UserRaw } from "@prisma/client"
 
 
 export class PrismaUserMapper {
-  static toPrisma({ id, name, email, password, createdAt }: User): UserRaw {
+  static toPrisma({ id,
+    name, email, password, createdAt }: User): UserRaw {
     return {
       id,
       name,
@@ -11,5 +12,14 @@ export class PrismaUserMapper {
       password,
       createdAt
     }
+  }
+  
+  static toDomain ({ id, name, email, password, createdAt }: UserRaw): User {
+    return new User ({
+      name,
+      email,
+      password,
+      createdAt
+    }, id)
   }
 }

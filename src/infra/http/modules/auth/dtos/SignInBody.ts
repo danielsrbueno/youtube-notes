@@ -1,19 +1,13 @@
 import { IsEmail, IsNotEmpty, IsString, MinLength } from "class-validator"
 
-export class CreateUserBody {
-  @IsString()
+export class SignInBody {
   @IsNotEmpty()
-  name: string
-
+  @IsString()
   @IsEmail()
-  @IsString()
-  @IsNotEmpty()
   email: string
 
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   @MinLength(6)
   password: string
-
-  createdAt: Date
 }
