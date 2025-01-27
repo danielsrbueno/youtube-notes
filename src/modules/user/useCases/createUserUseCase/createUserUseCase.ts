@@ -8,7 +8,6 @@ interface CreateUserRequest {
   name: string
   email: string
   password: string
-  createdAt: Date
 }
 
 @Injectable()
@@ -17,12 +16,11 @@ export class CreateUserUseCase {
 
   }
 
-  async execute({name, email, password, createdAt}: CreateUserRequest) {
+  async execute({name, email, password}: CreateUserRequest) {
     const user = new User({
       name,
       email,
       password: await hash(password, 10),
-      createdAt
     })
 
     await this.userRepository.create(user)

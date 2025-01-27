@@ -12,7 +12,7 @@ export class User {
   private props: UserSchema
   private _id: string
 
-  constructor (props: Replace<UserSchema, { createAt?: Date }>, id?: string) {
+  constructor(props: Replace<UserSchema, { createdAt?: Date }>, id?: string) {
     this.props = { ...props, createdAt: props.createdAt || new Date() }
     this._id = id || randomUUID()
   }

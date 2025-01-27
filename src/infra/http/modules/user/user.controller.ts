@@ -11,13 +11,12 @@ export class UserController {
   
   @Post()
   async createPost(@Body() body: CreateUserBody) {
-    const { email, name, password, createdAt } = body
+    const { email, name, password } = body
 
     const user = await this.createUserUseCase.execute({ 
       name,
       email,
-      password,
-      createdAt 
+      password 
     })
 
     return UserViewModel.toHttp(user)
