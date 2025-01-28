@@ -23,12 +23,13 @@ export class PrismaNoteRepository implements NoteRepository {
   }
 
   async save(note: Note): Promise<void> {
-    const noteRaw = PrismaNoteMapper.toPrisma(note)
+    const { id, ...noteRaw } = PrismaNoteMapper.toPrisma(note)
 
+    console.log(note)
     await this.prisma.note.update({
       data: noteRaw,
       where: {
-        id: noteRaw.userId
+        id
       }
     })
   }

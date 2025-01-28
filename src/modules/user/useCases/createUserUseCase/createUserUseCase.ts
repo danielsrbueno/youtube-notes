@@ -23,6 +23,8 @@ export class CreateUserUseCase {
       password: await hash(password, 10),
     })
 
+    console.log(user, email, password)
+
     await this.userRepository.create(user)
 
     return user

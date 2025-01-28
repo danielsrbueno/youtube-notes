@@ -3,6 +3,7 @@ import { PrismaService } from "./prisma/prisma.service";
 import { UserRepository } from "src/modules/user/repositories/UserRepository";
 import { PrismaUserRepository } from "./prisma/repositories/PrismaUserRepository";
 import { NoteRepository } from "src/modules/note/repositories/noteRepository";
+import { PrismaNoteRepository } from "./prisma/repositories/PrismaNoteRepository";
 
 
 @Module({
@@ -12,7 +13,7 @@ import { NoteRepository } from "src/modules/note/repositories/noteRepository";
   },
   {
     provide: NoteRepository,
-    useClass: PrismaUserRepository
+    useClass: PrismaNoteRepository
   }],
   exports: [UserRepository, NoteRepository]
 })
