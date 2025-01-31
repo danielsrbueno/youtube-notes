@@ -1,6 +1,7 @@
 import { UserRepository } from "src/modules/user/repositories/UserRepository"
-import { Injectable, UnauthorizedException } from "@nestjs/common"
+import { Injectable } from "@nestjs/common"
 import { compare } from "bcrypt"
+import { AuthValuesIcorrectException } from "../../exceptions/AuthValuesIcorrectException"
 
 interface ValidateUserRequest {
   email: string
@@ -14,11 +15,11 @@ export class ValidateUserUseCase {
   async execute({ email, password }: ValidateUserRequest) {
     const user = await this.userRepository.findByEmail(email)
 
-    if (!user) throw new UnauthorizedException("Email ou senha incorretos")
+    if (!user) throw new AuthValuesIcorrectException()
 
     const isPasswordMatched = await compare(password, user.password)
 
-    if (!isPasswordMatched) throw new UnauthorizedException("Email ou senha incorretos")
+    if (!isPasswordMatched) throw new AuthValuesIcorrectException()
 
     return user
   }

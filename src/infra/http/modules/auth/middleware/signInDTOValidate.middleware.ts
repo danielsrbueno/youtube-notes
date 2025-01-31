@@ -1,7 +1,9 @@
-import { BadRequestException, Injectable, NestMiddleware } from "@nestjs/common"
+import { Injectable, NestMiddleware } from "@nestjs/common"
 import { NextFunction, Request, Response } from "express"
 import { SignInBody } from "../dtos/SignInBody"
 import { validate } from "class-validator"
+import { IncorrectValuesException } from "src/excepitions/IncorrectValuesException"
+import { mapperValidationErrorToAppException } from "src/utils/mappers"
 
 @Injectable()
 export class SignInDTOValidateMiddleware implements NestMiddleware {
@@ -14,7 +16,10 @@ export class SignInDTOValidateMiddleware implements NestMiddleware {
 
     const validations = await validate(signInBody)
 
-    if (validations.length) throw new BadRequestException(validations)
+    if (validations.length) 
+      throw new IncorrectValuesException({
+        fields: mapperValidationErrorToAppException(validations)
+      })
 
     next()
   }

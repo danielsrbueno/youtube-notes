@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common"
 import { UserRepository } from "../../repositories/UserRepository"
 import { User } from "../../entities/User"
 import { hash } from "bcrypt"
+import { UserWithSameEmailException } from "../../exceptions/UserWithSameEmailExceptions"
 
 
 interface CreateUserRequest {
@@ -17,6 +18,10 @@ export class CreateUserUseCase {
   }
 
   async execute({name, email, password}: CreateUserRequest) {
+    const userAlreadyExist = await this.userRepository.findByEmail(email)
+
+    if(userAlreadyExist) throw new UserWithSameEmailException()
+
     const user = new User({
       name,
       email,

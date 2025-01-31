@@ -3,7 +3,7 @@ import { ValidateUserUseCase } from "./validateUserUseCase"
 import { UserRepositoryInMemory } from "src/modules/user/repositories/UserReporitoryInMemory"
 import { hash } from "bcrypt"
 import { makeUser } from "src/modules/user/factories/userFactory"
-import { UnauthorizedException } from "@nestjs/common"
+import { AuthValuesIcorrectException } from "../../exceptions/AuthValuesIcorrectException"
 
 let validateUserUseCase: ValidateUserUseCase
 let userRepositoryInMemory: UserRepositoryInMemory
@@ -48,6 +48,6 @@ describe("Validate User", () => {
         email: user.email,
         password: "incorre"
       })
-    }).rejects.toThrow(UnauthorizedException)
+    }).rejects.toThrow(AuthValuesIcorrectException)
   })
 })

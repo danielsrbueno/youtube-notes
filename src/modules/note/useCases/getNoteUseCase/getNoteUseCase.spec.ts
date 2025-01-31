@@ -1,8 +1,9 @@
 import { NoteRepositoryInMemory } from "../../repositories/noteRepositoryInMemory"
 import { makeNote } from "../../factories/noteFactory"
-import { NotFoundException, UnauthorizedException } from "@nestjs/common"
 import { makeUser } from "src/modules/user/factories/userFactory"
 import { GetNoteUseCase } from "./getNoteUseCase"
+import { NoteWithoutPermissionException } from "../../exceptions/NoteWithoutPermissionException"
+import { NoteNotFoundException } from "../../exceptions/NoteNotFoundException"
 
 let noteRepositoryInMemory: NoteRepositoryInMemory
 let getNoteUseCase: GetNoteUseCase
@@ -35,7 +36,7 @@ describe("Get Note", () => {
         noteId: "fake",
         userId: "fake"
       })
-    }).rejects.toThrowError(NotFoundException)
+    }).rejects.toThrowError(NoteNotFoundException)
   })
 
   it("Should be able to throw error when note has another user", async () => {
@@ -48,6 +49,6 @@ describe("Get Note", () => {
         noteId: note.id,
         userId: "fake"
       })
-    }).rejects.toThrowError(UnauthorizedException)
+    }).rejects.toThrowError(NoteWithoutPermissionException)
   })
 })
